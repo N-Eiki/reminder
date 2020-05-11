@@ -22,15 +22,26 @@
             {% endwith %}
         </tr>
 
-        {% for day in weekday %}
+        {% for day in weekdays %}
         <tr>
             <th>{{day}}</th>
-            <th><a href="#">予定なし</a></th>
-            <th><a href="#">予定なし</a></th>
-            <th><a href="#">予定なし</a></th>
-            <th><a href="#">予定なし</a></th>
-            <th><a href="#">予定なし</a></th>
-            <th><a href="#">予定なし</a></th>
+            {% with ''|center:6 as range %}
+            {% for _ in range%}
+                {% if day　==　weekday and forloop.counter == timetable[forloop.couner] %}
+                    {% with title=subject %}
+                    <th><a href="#">{{title[forloop.counter}}</a></th>
+                    {% endwith %}
+                {% else %}
+                <th><a href="#">予定なし</a></th>
+                {% endif %}
+            {% endfor %}
+            {% endwith %}
+<!--            <th><a href="#">予定なし</a></th>-->
+<!--            <th><a href="#">予定なし</a></th>-->
+<!--            <th><a href="#">予定なし</a></th>-->
+<!--            <th><a href="#">予定なし</a></th>-->
+<!--            <th><a href="#">予定なし</a></th>-->
+<!--            <th><a href="#">予定なし</a></th>-->
         </tr>
         {% endfor %}
     </table>

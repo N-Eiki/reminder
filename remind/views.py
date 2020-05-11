@@ -31,11 +31,23 @@ def loginfunc(request):
     return render(request,"login.html")
 
 def homefunc(request):
-    weekday = ["月", "火", "水", "木", "金"]
+    weekdays = ["月", "火", "水", "木", "金"]
     print("test")
-    # all = SubjectModel.objects.all()
+    all = SubjectModel.objects.all()
     # for a in all:
     #     print(a.user)
     # print("test")
     #forのなかでa.user=ログインユーザー名の場合値を返すような感じ？
-    return render(request, "home.html", {"weekday":weekday,})
+    subjects=[]
+    weekday=[]
+    timetable=[]
+    for data in all:
+        if data.user=="aaa":
+            subjects.append(data.title)
+            weekday.append(data.weekday)
+            timetable.append(data.timetable)
+    print(subjects)
+    print(weekday)
+    print(timetable)
+    return render(request, "home.html", {"weekdays":weekdays, "subject":subjects,"weekday":weekday, "timetable":timetable})
+    # return render(request, "home.html", {"weekdays":weekdays, "subject":"c言語","weekday":"月", "timetable":3})
