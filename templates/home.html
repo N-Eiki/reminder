@@ -13,6 +13,30 @@
 
 {% block content %}
 <div class="alert alert-danger" role="alert">
-    simple success alert
+    <table border="1">
+        <tr>
+            {%with ''|center:7 as range %}
+            {%for i in range%}
+            <th>{{forloop.counter0}}</th>
+            {% endfor %}
+            {% endwith %}
+        </tr>
+
+        {% for day in weekday %}
+        <tr>
+            <th>{{day}}</th>
+            <th><a href="#">予定なし</a></th>
+            <th><a href="#">予定なし</a></th>
+            <th><a href="#">予定なし</a></th>
+            <th><a href="#">予定なし</a></th>
+            <th><a href="#">予定なし</a></th>
+            <th><a href="#">予定なし</a></th>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <table border="1">
+        <a href="#">他の予定</a>
+    </table>
 </div>
 {% endblock content %}

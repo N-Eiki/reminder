@@ -12,8 +12,8 @@ def signupfunc(request):
             return render(request, "signup.html", {"error":"このユーザー名はすでに使用されています。"})
         except:
             user = User.objects.create_user(username, email, password)
-            return render(request, "sinup.html", {"some":100})
-    return render(request, "signup.html", {"some":100})
+            return render(request, "sinup.html")
+    return render(request, "signup.html")
 
 
 def loginfunc(request):
@@ -30,4 +30,5 @@ def loginfunc(request):
     return render(request,"login.html")
 
 def homefunc(request):
-    return render(request, "home.html")
+    weekday = ["月", "火", "水", "木", "金"]
+    return render(request, "home.html", {"weekday":weekday})
