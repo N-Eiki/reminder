@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from .models import SubjectModel
 # Create your views here.
 def signupfunc(request):
     if request.method=="POST":
@@ -31,4 +32,10 @@ def loginfunc(request):
 
 def homefunc(request):
     weekday = ["月", "火", "水", "木", "金"]
-    return render(request, "home.html", {"weekday":weekday})
+    print("test")
+    # all = SubjectModel.objects.all()
+    # for a in all:
+    #     print(a.user)
+    # print("test")
+    #forのなかでa.user=ログインユーザー名の場合値を返すような感じ？
+    return render(request, "home.html", {"weekday":weekday,})
