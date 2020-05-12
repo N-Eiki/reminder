@@ -8,7 +8,7 @@
 
 {% block header %}
 <div class="alert alert-success" role="alert">
-    simple success alert
+{{username}}
 </div>
 {% endblock header %}
 
@@ -30,7 +30,7 @@
             {% with ''|center:5 as range %}
             {% for _ in range%}
             {% with forloop.counter as classes %}
-                    <th><a href="#">{{ day|make_list:classes|display:alldata }}</a></th>
+                    <th><a href="{% url "detail" day classes %}"}>{{ day|make_list:classes|display:alldata }}</a></th>
             {% endwith %}
             {% endfor %}
             {% endwith %}
