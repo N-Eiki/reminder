@@ -40,14 +40,23 @@ def homefunc(request):
     #forのなかでa.user=ログインユーザー名の場合値を返すような感じ？
     alldata = []
     for all_data in all:
-        if all_data.user=="admin":##ここにログインユーザー名を入れる
+        if all_data.user==str(request.user):##ここにログインユーザー名を入れる
             sub_list = []
             sub_list.append(all_data.title)
             sub_list.append(all_data.weekday)
             sub_list.append(all_data.timetable)
             alldata.append(sub_list)
-    print(len(alldata))
-    return render(request, "home.html", {"weekdays":weekdays, "alldata":alldata})
+
+    return render(request, "home.html", {"username":request.user,"weekdays":weekdays, "alldata":alldata})
 
 def logoutfunc(request):
     logout(request)
+
+
+def detailfunc(request, day,timetable):
+    # object = SubjectModel.objects.get(user=request.user)
+    try:
+        data = SubjectModel.objects.get(user=request.user, timetable=timetable,weekday=day)
+    except:
+        data={"title":"予定なし"}
+    return render(request, "detail.html", {"timetable":timetable, "day":day, "data":data})

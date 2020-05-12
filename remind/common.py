@@ -37,11 +37,13 @@ def make_list(ele1, ele2):
 @register.filter
 def display(state, alldata):
     res = ""
-
-    for data in alldata:
-        if data[1]==state[0] and data[2]==state[1]:
-            res=data[0]
-            break;
-        else:
-            res="予定なし"
+    if len(alldata)>0:
+        for data in alldata:
+            if data[1]==state[0] and data[2]==state[1]:
+                res=data[0]
+                break;
+            else:
+                res="予定なし"
+    else:
+        res="予定なし"
     return res

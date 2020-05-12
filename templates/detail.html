@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load common %}
+
+{% block customcss %}
+{% endblock customcss %}
+
+
+{% block header %}
+<div class="alert alert-success" role="alert">
+    simple success alert
+</div>
+{% endblock header %}
+
+
+{% block content %}
+<h1>ここは詳細ページです</h1>
+<p>ここでは授業内容の更新などが行えます。</p>
+<h1>{{day}}曜日, {{timetable}}時限目の講義は</h1>
+<h1>{{data.title}}です</h1>
+{% endblock content %}
