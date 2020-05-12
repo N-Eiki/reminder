@@ -32,22 +32,15 @@ def loginfunc(request):
 
 def homefunc(request):
     weekdays = ["月", "火", "水", "木", "金"]
-    print("test")
     all = SubjectModel.objects.all()
-    # for a in all:
-    #     print(a.user)
-    # print("test")
     #forのなかでa.user=ログインユーザー名の場合値を返すような感じ？
-    subjects=[]
-    weekday=[]
-    timetable=[]
-    for data in all:
-        if data.user=="aaa":
-            subjects.append(data.title)
-            weekday.append(data.weekday)
-            timetable.append(data.timetable)
-    print(subjects)
-    print(weekday)
-    print(timetable)
-    return render(request, "home.html", {"weekdays":weekdays, "subject":subjects,"weekday":weekday, "timetable":timetable})
-    # return render(request, "home.html", {"weekdays":weekdays, "subject":"c言語","weekday":"月", "timetable":3})
+    alldata = []
+    for all_data in all:
+        if all_data.user=="admin":##ここにログインユーザー名を入れる
+            sub_list = []
+            sub_list.append(all_data.title)
+            sub_list.append(all_data.weekday)
+            sub_list.append(all_data.timetable)
+            alldata.append(sub_list)
+    print(len(alldata))
+    return render(request, "home.html", {"weekdays":weekdays, "alldata":alldata})
