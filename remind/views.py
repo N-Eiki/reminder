@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .models import SubjectModel
+from django.contrib.auth.decorators import login_required
+
+
 # Create your views here.
 def signupfunc(request):
     if request.method=="POST":
@@ -25,11 +28,12 @@ def loginfunc(request):
 
         if user is not None:
             login(request, user)
-            return redirect('signup')
+            return redirect('home')
         else:
             return redirect('login')
     return render(request,"login.html")
 
+@login_required
 def homefunc(request):
     weekdays = ["月", "火", "水", "木", "金"]
     all = SubjectModel.objects.all()
@@ -44,3 +48,6 @@ def homefunc(request):
             alldata.append(sub_list)
     print(len(alldata))
     return render(request, "home.html", {"weekdays":weekdays, "alldata":alldata})
+
+def logoutfunc(request):
+    logout(request)
