@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load common %}
+
 {% block customcss %}
 {% endblock customcss %}
 
@@ -15,22 +17,23 @@
 <div class="alert alert-danger" role="alert">
     <table border="1">
         <tr>
-            {%with ''|center:7 as range %}
+            {%with ''|center:6 as range %}
             {%for i in range%}
             <th>{{forloop.counter0}}</th>
             {% endfor %}
             {% endwith %}
         </tr>
 
-        {% for day in weekday %}
+        {% for day in weekdays %}
         <tr>
             <th>{{day}}</th>
-            <th><a href="#">予定なし</a></th>
-            <th><a href="#">予定なし</a></th>
-            <th><a href="#">予定なし</a></th>
-            <th><a href="#">予定なし</a></th>
-            <th><a href="#">予定なし</a></th>
-            <th><a href="#">予定なし</a></th>
+            {% with ''|center:5 as range %}
+            {% for _ in range%}
+            {% with forloop.counter as classes %}
+                    <th><a href="#">{{ day|make_list:classes|display:alldata }}</a></th>
+            {% endwith %}
+            {% endfor %}
+            {% endwith %}
         </tr>
         {% endfor %}
     </table>
@@ -38,5 +41,6 @@
     <table border="1">
         <a href="#">他の予定</a>
     </table>
+
 </div>
 {% endblock content %}
