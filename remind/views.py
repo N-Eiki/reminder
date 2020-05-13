@@ -62,34 +62,45 @@ def logoutfunc(request):
 
 @login_required
 def detailfunc(request, day,timetable):
-    errormsg=""
+    remindmsg=""
     try:
         data = SubjectModel.objects.get(user=request.user, timetable=timetable,weekday=day)
+        obj = SubjectModel.objects.get(user=request.user, weekday=day, timetable=timetable)
+        remindmsg = "リマインド停止中です"
+        if obj.remind:
+            remindmsg = "リマインドします"
     except:
         data={"title":"予定なし", "pk":False}
+        print(1)
 
-    #予定なしからのポスト
-    if "newPOST" in request.POST:
-        return newPOST(request)
-    elif "updatePOST" in request.POST:
-        return updatePOST(request)#更新のポスト
-    # elif "deletePOST" in request.POST:
-    #削除のポスト
-    # deletePOST(request, day, timetable)
-    obj=SubjectModel.objects.get(user=request.user, weekday=day, timetable=timetable)
-    remindmsg="リマインド停止中です"
-    if obj.remind:
-        remindmsg="リマインドします"
+    try:
+        print(1.5)
+        #予定なしからのポスト
+        if "newPOST" in request.POST:
+            print(2)
+            return newPOST(request)
+        elif "updatePOST" in request.POST:
+            print(3)
+            return updatePOST(request)#ポストの更新
+        elif "deletePOST" in request.POST:
+            print(4)
+            return deletePOST(request)#ポストの削除
+        else:
+            raise("error")
+    except:
+        print(5)
 
-    params = {
-        "data":data,
-        "timetable":timetable,
-        "day":day,
-        "radioForm":RemindRadioForm,
-        "createForm":createForm,
-        "remindmsg":remindmsg
-    }
-    return render(request, "detail.html", params)
+
+        params = {
+            "data": data,
+            "timetable": timetable,
+            "day": day,
+            "radioForm": RemindRadioForm,
+            "createForm": createForm,
+            "remindmsg": remindmsg
+        }
+        return render(request, "detail.html", params)
+
 
 
 def newPOST(request):
@@ -101,11 +112,8 @@ def newPOST(request):
     obj.save()
     return redirect(to="home")
 
-    # object = SubjectModel.objects.get(user=request.user, weekdays=day, timetabl=timetable)
-    # print(object)
 def updatePOST(request):
     obj = SubjectModel.objects.get(pk=request.POST.get("pk"))
-    print(obj.title)
     obj.title = request.POST.get('title')
     obj.remind = request.POST.get('remind')
     obj.sns_id=request.POST.get('sns_id')
@@ -115,12 +123,13 @@ def updatePOST(request):
     return redirect(to="home")
 
 
-# def deletePOST(request, day, timetable)
+def deletePOST(request):
+    pk=request.POST.get('deletePk')
+    obj = SubjectModel.objects.get(pk=pk)
+    obj.delete()
 
+    return redirect(to="home")
 
 class dataDelete(DeleteView):
     model = SubjectModel
     success_url = reverse_lazy("home")
-
-
-
