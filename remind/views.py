@@ -19,8 +19,7 @@ def signupfunc(request):
             return render(request, "signup.html", {"error":"このユーザー名はすでに使用されています。"})
         except:
             user = User.objects.create_user(username, email, password)
-            return render(request, "sinup.html")
-    return render(request, "signup.html")
+            return redirect("home")
 
 
 def loginfunc(request):
@@ -71,11 +70,12 @@ def detailfunc(request, day,timetable):
 
     #予定なしからのポスト
     if(request.POST.get("newPOST")):
-        return newPOST(request, day, timetable)
+        return newPOST(request)
     else:
-        print("else")
-    #更新のポスト
-    # updatePOST(request, day, timetable)
+        # print("else")
+        if request.POST.get("update"):
+            #更新のポスト
+            updatePOST(request)
     #削除のポスト
     # deletePOST(request, day, timetable)
 
@@ -88,7 +88,7 @@ def detailfunc(request, day,timetable):
     return render(request, "detail.html", params)
 
 
-def newPOST(request, day, timetable):
+def newPOST(request):
     obj = SubjectModel(
         user=request.user, title=request.POST.get('title'), weekday=request.POST.get("weekday"),
         timetable=request.POST.get('timetable'), sns_id=request.POST.get('sns_id'),
@@ -99,8 +99,12 @@ def newPOST(request, day, timetable):
 
     # object = SubjectModel.objects.get(user=request.user, weekdays=day, timetabl=timetable)
     # print(object)
-    # def updatePOST(request, day, timetable):
-    # def deletePOST(request, day, timetable)
+def updatePOST(request):
+    obj = SubjectModel.objects.filter(user=request.user, weekday=request.POST.get('weekday'),
+                                      timetable=request.POST.get('timetable'))
+    print(obj)
+
+# def deletePOST(request, day, timetable)
 
 
 class dataDelete(DeleteView):
