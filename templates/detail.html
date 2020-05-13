@@ -47,9 +47,9 @@
 
     <form action="" method="post">
         {% csrf_token %}
-                <p>講義名: <input type="text" name="title" value="" placeholder="未設定"></p>
+                <p>講義名: <input type="text" name="title" value="" placeholder="未設定" required=True></p>
         <p>{{radioForm}}</p>
-        <p>snsのid <input type="text" name="sns_id" value="" placeholder="未設定"></p>
+        <p>snsのid <input type="text" name="sns_id" value="" placeholder="未設定" required=True></p>
         <p>講義が近づいたらなんとリマインドしますか？ <input type="text" name="remind_class" value="講義が近づいています"></p>
         <p>講義の提出が近づいたらなんとリマインドしますか？ <input type="text" name="remind_task" value="課題提出日が近づいています"></p>
         <input type="hidden" name="weekday" value="{{day}}">

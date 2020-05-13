@@ -71,10 +71,9 @@ def detailfunc(request, day,timetable):
 
     #予定なしからのポスト
     if(request.POST.get("newPOST")):
-        newPOST(request, day, timetable)
-
+        return newPOST(request, day, timetable)
     else:
-        print('失敗')
+        print("else")
     #更新のポスト
     # updatePOST(request, day, timetable)
     #削除のポスト
@@ -95,16 +94,8 @@ def newPOST(request, day, timetable):
         timetable=request.POST.get('timetable'), sns_id=request.POST.get('sns_id'),
         remind_class=request.POST.get('remind_class'), remind_task=request.POST.get('remind_task'),
         remind=request.POST.get('remind'))
-    # obj.save()
-
-    # print(request.POST.get("title"))
-    # print(request.POST.get("weekday"))
-    # print(request.POST.get("timetable"))
-    # print(request.POST.get("sns_id"))
-    # print(request.POST.get("remind_class"))
-    # print(request.POST.get("remind_task"))
-    # print(request.POST.get("remind"))
-    # return redirect(to="home")
+    obj.save()
+    return redirect("home")
 
     # object = SubjectModel.objects.get(user=request.user, weekdays=day, timetabl=timetable)
     # print(object)
