@@ -71,26 +71,17 @@ def detailfunc(request, day,timetable):
             remindmsg = "リマインドします"
     except:
         data={"title":"予定なし", "pk":False}
-        print(1)
-
     try:
-        print(1.5)
         #予定なしからのポスト
         if "newPOST" in request.POST:
-            print(2)
             return newPOST(request)
         elif "updatePOST" in request.POST:
-            print(3)
             return updatePOST(request)#ポストの更新
         elif "deletePOST" in request.POST:
-            print(4)
             return deletePOST(request)#ポストの削除
         else:
             raise("error")
     except:
-        print(5)
-
-
         params = {
             "data": data,
             "timetable": timetable,
