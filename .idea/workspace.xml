@@ -4,7 +4,7 @@
     <list default="true" id="84b48f20-4a6a-4ef0-ac4f-2de9a71f679f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/remind/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/remind/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remind/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/remind/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/remind/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/remind/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/detail.html" afterDir="false" />
     </list>
@@ -47,18 +47,18 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="353" y="52" key="CommitChangelistDialog2" timestamp="1589287449621">
+    <state x="353" y="52" key="CommitChangelistDialog2" timestamp="1589377182885">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="353" y="52" key="CommitChangelistDialog2/0.0.1440.900/1440.0.1920.1080@0.0.1440.900" timestamp="1589287449621" />
+    <state x="353" y="52" key="CommitChangelistDialog2/0.0.1440.900/1440.0.1920.1080@0.0.1440.900" timestamp="1589377182885" />
     <state x="399" y="282" key="com.intellij.ide.util.TipDialog" timestamp="1589351243188">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="399" y="282" key="com.intellij.ide.util.TipDialog/0.0.1440.900/1440.0.1920.1080@0.0.1440.900" timestamp="1589351243188" />
     <state x="358" y="135" key="com.intellij.ide.util.TipDialog/0.22.1440.878/1440.22.1920.1058@0.22.1440.878" timestamp="1589214816701" />
-    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1589363343017">
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1589375628217">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900/1440.0.1920.1080@0.0.1440.900" timestamp="1589363343017" />
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900/1440.0.1920.1080@0.0.1440.900" timestamp="1589375628217" />
   </component>
 </project>
