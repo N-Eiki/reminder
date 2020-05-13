@@ -5,7 +5,7 @@ from .models import SubjectModel
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DeleteView,CreateView
 from django.urls import reverse_lazy
-from .forms import RemindRadioForm
+from .forms import RemindRadioForm,createForm
 
 
 # Create your views here.
@@ -69,21 +69,25 @@ def detailfunc(request, day,timetable):
         data={"title":"予定なし", "pk":False}
 
     #予定なしからのポスト
-    if(request.POST.get("newPOST")):
+    if "newPOST" in request.POST:
         return newPOST(request)
-    else:
-        # print("else")
-        if request.POST.get("update"):
-            #更新のポスト
-            updatePOST(request)
+    elif "updatePOST" in request.POST:
+        return updatePOST(request)#更新のポスト
+    # elif "deletePOST" in request.POST:
     #削除のポスト
     # deletePOST(request, day, timetable)
+    obj=SubjectModel.objects.get(user=request.user, weekday=day, timetable=timetable)
+    remindmsg="リマインド停止中です"
+    if obj.remind:
+        remindmsg="リマインドします"
 
     params = {
         "data":data,
         "timetable":timetable,
         "day":day,
         "radioForm":RemindRadioForm,
+        "createForm":createForm,
+        "remindmsg":remindmsg
     }
     return render(request, "detail.html", params)
 
@@ -95,14 +99,21 @@ def newPOST(request):
         remind_class=request.POST.get('remind_class'), remind_task=request.POST.get('remind_task'),
         remind=request.POST.get('remind'))
     obj.save()
-    return redirect("home")
+    return redirect(to="home")
 
     # object = SubjectModel.objects.get(user=request.user, weekdays=day, timetabl=timetable)
     # print(object)
 def updatePOST(request):
-    obj = SubjectModel.objects.filter(user=request.user, weekday=request.POST.get('weekday'),
-                                      timetable=request.POST.get('timetable'))
-    print(obj)
+    obj = SubjectModel.objects.get(pk=request.POST.get("pk"))
+    print(obj.title)
+    obj.title = request.POST.get('title')
+    obj.remind = request.POST.get('remind')
+    obj.sns_id=request.POST.get('sns_id')
+    obj.remind_class = request.POST.get('remind_class')
+    obj.remind_task = request.POST.get('remind_task')
+    obj.save()
+    return redirect(to="home")
+
 
 # def deletePOST(request, day, timetable)
 
