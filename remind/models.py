@@ -10,4 +10,4 @@ class SubjectModel(models.Model):
     remind = models.BooleanField(default=True)#通知をするか否か
     sns_id = models.CharField(max_length=100)#通知を送るためのtoken
     remind_class = models.TextField()#リマインドするときの言葉
-    remind_task  = models.TextField()
+    remind_task = models.TextField()
