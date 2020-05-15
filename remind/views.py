@@ -20,6 +20,8 @@ def signupfunc(request):
         except:
             user = User.objects.create_user(username, email, password)
             return redirect("home")
+    else:
+        return render(request, "signup.html")
 
 
 def loginfunc(request):
