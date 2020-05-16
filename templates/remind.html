@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load common %}
+
+
+{% block customcss %}
+{% endblock customcss %}
+
+
+{% block title%} remind {% endblock title %}
+
+
+{% block header %}
+{% endblock header %}
+
+
+{% block content %}
+
+{% load static %}
+<!-- webpush_notificationsのカスタムテンプレートタグの読み込み --> 
+{% load webpush_notifications %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+　<!-- webpush用のmetaタグとスクリプトの読み込み -->
+     {% webpush_header %}
+ </head>
+ <body>
+   <p> Hello World!  </p>
+   <!-- push通知の購読ボタン -->
+   {% webpush_button %}
+ </body>
+ </html>
+
+{% endblock content %}
