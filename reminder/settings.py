@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 WEBPUSH_SETTINGS = {
    "VAPID_PUBLIC_KEY": "BCiM-4w3uZhAgbz9laUQwZJM7HvyW2nLsKcHQ2D4kq5wf5hNxSxXJxWMgyLk3fm-VUs6h7NHXKKa_fh8UQx1PTA",
    "VAPID_PRIVATE_KEY": "DGgqHVZCg4a08NBbzDlO1HE_7xi09SdX_vgo_0iGBMg",
-#    "VAPID_ADMIN_EMAIL": "ludicolo@docomo.ne.jp",
+   "VAPID_ADMIN_EMAIL": "ludicolo@docomo.ne.jp",
 }
 
 
