@@ -26,3 +26,12 @@ class LineMessage():
 
 def message_create(data):
     return [data.remind_class, data.remind_task]
+
+
+def LineNotifyMessage():
+    line_notify_token="Au0ZoMVcud0qyHZzV8vJ3apJywFO5EqwiI6olYfWS9b"
+    line_notify_api = 'https://notify-api.line.me/api/notify'
+    message="\nthis is test notify"
+    payload = {'message': message}
+    headers = {'Authorization': 'Bearer ' + line_notify_token}  # 発行したトークン
+    line_notify = requests.post(line_notify_api, data=payload, headers=headers)

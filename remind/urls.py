@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import signupfunc,loginfunc, homefunc, logoutfunc, detailfunc,dataDelete,remindfunc
+from .views import signupfunc,loginfunc, homefunc, logoutfunc, detailfunc,dataDelete#,remindfunc
 from django.conf.urls import url
 
 urlpatterns = [

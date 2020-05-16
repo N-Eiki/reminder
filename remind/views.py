@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from .forms import RemindRadioForm,createForm
 from django.views.decorators.csrf import csrf_exempt
 import json
-from .util.tool import LineMessage, message_create
+from .util.tool import LineMessage, message_create,LineNotifyMessage
 from django.http import HttpResponse
 from webpush import send_user_notification
 
@@ -154,5 +154,9 @@ class dataDelete(DeleteView):
 
 #         return HttpResponse('ok')
 
-def remindfunc(req):
-    return render(req, "remind.html")
+# def remindfunc(req):
+#     return render(req, "remind.html")
+
+def scheduledRemindfunc(request):
+    job()
+    return HttpResponse('ok')
