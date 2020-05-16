@@ -9,9 +9,11 @@
 {% block header %}
 <div class="alert alert-success" role="alert">
     {{user.username}}
+    {{msg}}
 </div>
 {% endblock header %}
 
+{% block title%}home{% endblock title %}
 
 {% block content %}
 <div class="alert alert-danger" role="alert">

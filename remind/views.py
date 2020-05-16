@@ -6,7 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import DeleteView,CreateView
 from django.urls import reverse_lazy
 from .forms import RemindRadioForm,createForm
-
+from django.views.decorators.csrf import csrf_exempt
+import json
+from .util.tool import LineMessage, message_create
+from django.http import HttpResponse
+from webpush import send_user_notification
 
 # Create your views here.
 def signupfunc(request):
@@ -20,6 +24,8 @@ def signupfunc(request):
         except:
             user = User.objects.create_user(username, email, password)
             return redirect("home")
+    else:
+        return render(request, "signup.html")
 
 
 def loginfunc(request):
@@ -48,7 +54,9 @@ def homefunc(request):
             sub_list.append(all_data.weekday)
             sub_list.append(all_data.timetable)
             alldata.append(sub_list)
-
+    
+    payload = {"head":"welcom", "body":"hello world"}
+    send_user_notification(user=request.user, payload=payload, ttl=1000)
     params = {
         "alldata":alldata,
         "weekdays":weekdays,
@@ -63,6 +71,7 @@ def logoutfunc(request):
 @login_required
 def detailfunc(request, day,timetable):
     remindmsg=""
+
     try:
         data = SubjectModel.objects.get(user=request.user, timetable=timetable,weekday=day)
         obj = SubjectModel.objects.get(user=request.user, weekday=day, timetable=timetable)
@@ -124,3 +133,26 @@ def deletePOST(request):
 class dataDelete(DeleteView):
     model = SubjectModel
     success_url = reverse_lazy("home")
+
+
+
+
+# from datetime import datetime, timedelta
+
+# @csrf_exempt
+# def remindfunc(request):
+#     if request.method=="POST":
+#         req = json.loads(request.body.decode('utf-8'))
+#         events = req["events"]
+#         day="月"
+#         timetable="3"
+#         data= msg_class=SubjectModel.objects.get(user="admin", timetable=timetable,weekday=day)
+#         for event in events:
+#             msg = message_create()
+#             line_message = LineMessage(msg)
+#             line_message.reply()
+
+#         return HttpResponse('ok')
+
+def remindfunc(req):
+    return render(req, "remind.html")
