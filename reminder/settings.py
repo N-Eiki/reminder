@@ -11,6 +11,16 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+# Celeryの設定
+import djcelery
+djcelery.setup_loader()
+BROKER_HOST = "localhost"
+BROKER_PORT = 5672
+BROKER_USER = "test_user"
+BROKER_PASSWORD = "test_pass"
+BROKER_VHOST = "test"
+CELERY_RESULT_BACKEND = "amqp"
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "remind",
     "webpush",
+    "djcelery"
 ]
 
 MIDDLEWARE = [
@@ -132,3 +143,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL="login"
+
+
+from celery.schedules import crontab
+from datetime import timedelta
+CELERYBEAT_SCHEDULE = {
+    "every-half-minute": {
+        "task": "myapp.tasks.add",
+        "schedule":  timedelta(seconds=30),
+        "args": (16, 16),
+    },
+}

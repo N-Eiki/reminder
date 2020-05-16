@@ -10,5 +10,5 @@ urlpatterns = [
     path("logout/", logoutfunc, name="logout"),
     path('detail/<day>/<int:timetable>', detailfunc, name="detail"),
     path('delete/<int:pk>', dataDelete.as_view(), name="delete"),
-    path("remind", remindfunc, name="remind"), 
+    path("remind/", remindfunc, name="remind"), 
 ]
