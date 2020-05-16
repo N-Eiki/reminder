@@ -156,3 +156,6 @@ class dataDelete(DeleteView):
 
 def remindfunc(req):
     return render(req, "remind.html")
+
+
+
