@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 
 {% load common %}
+{% load static %}
 
 {% block customcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 {% endblock customcss %}
 
+{% block title%}home{% endblock title %}
 
 {% block header %}
 <div class="alert alert-success" role="alert">
@@ -13,7 +16,7 @@
 </div>
 {% endblock header %}
 
-{% block title%}home{% endblock title %}
+
 
 {% block content %}
 <div class="alert alert-danger" role="alert">

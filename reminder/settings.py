@@ -144,6 +144,9 @@ STATIC_URL = '/static/'
 
 LOGIN_URL="login"
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]
 
 from celery.schedules import crontab
 from datetime import timedelta
@@ -154,3 +157,5 @@ CELERYBEAT_SCHEDULE = {
         "args": (16, 16),
     },
 }
+
+
