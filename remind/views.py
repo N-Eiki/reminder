@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from .forms import RemindRadioForm,createForm
 from django.views.decorators.csrf import csrf_exempt
 import json
-from .util.tool import LineMessage, message_create
+# from .util.tool import LineMessage, message_create
 from django.http import HttpResponse
 from webpush import send_user_notification
 
