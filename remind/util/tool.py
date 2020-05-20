@@ -29,23 +29,23 @@ headers = {'Authorization': 'Bearer ' + line_notify_token}  # 発行したトー
 # def message_create(data):
 #     return [data.remind_class, data.remind_task]
 
-def job():
+def job(username):
     line_notify_token="Au0ZoMVcud0qyHZzV8vJ3apJywFO5EqwiI6olYfWS9b"
     line_notify_api = 'https://notify-api.line.me/api/notify'
-    username="admin"
+    # username="admin"
     class_msg, task_msg = get_message(username)
     
     headers = {'Authorization': 'Bearer ' + line_notify_token}  # 発行したトークン
     if len(class_msg)>1:
         for c,t in zip(class_msg, task_msg):
             payload = {'message': "講義のリマインドです\n"+c}
-            line_notify = requests.post(line_notify_api, data=payload, headers=headers)
+            # line_notify = requests.post(line_notify_api, data=payload, headers=headers)
             payload = {'message': "課題のリマインドです\n"+t}
-            line_notify = requests.post(line_notify_api, data=payload, headers=headers)
+            # line_notify = requests.post(line_notify_api, data=payload, headers=headers)
     else:
             payload = {'message': "今日の講義はありません\n他の日の課題を終わらせてしまいましょう！"}
-            line_notify = requests.post(line_notify_api, data=payload, headers=headers)
-
+            # line_notify = requests.post(line_notify_api, data=payload, headers=headers)
+    print(payload)
 def get_message(username):
     week=["月","火","水","木","金","土","日"]
     weekday=week[datetime.date.today().weekday()]
