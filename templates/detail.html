@@ -34,6 +34,7 @@
 </div>
 <hr>
 <form action="" method="POST">{% csrf_token %}
+    <input type="hidden" name="deletePk" value="{{data.pk}}">
     <input type="submit"  name="deletePOST" value="この講義の登録を削除する">
 </form>
 {% endif %}
