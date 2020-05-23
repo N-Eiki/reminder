@@ -81,14 +81,14 @@ def logoutfunc(request):
 
 @login_required
 def detailfunc(request, day,timetable):
-    remindmsg=""
+    # remindmsg=""
 
     try:
         data = SubjectModel.objects.get(user=request.user, timetable=timetable,weekday=day)
         obj = SubjectModel.objects.get(user=request.user, weekday=day, timetable=timetable)
-        remindmsg = "リマインド停止中です"
-        if obj.remind:
-            remindmsg = "リマインドします"
+        # remindmsg = "リマインド停止中です"
+        # if obj.remind:
+        #     remindmsg = "リマインドします"
     except:
         data={"title":"予定なし", "pk":False}
     try:
@@ -106,9 +106,9 @@ def detailfunc(request, day,timetable):
             "data": data,
             "timetable": timetable,
             "day": day,
-            "radioForm": RemindRadioForm,
+            # "radioForm": RemindRadioForm,
             "createForm": createForm,
-            "remindmsg": remindmsg
+            # "remindmsg": remindmsg
         }
         return render(request, "detail.html", params)
 
@@ -117,17 +117,18 @@ def detailfunc(request, day,timetable):
 def newPOST(request):
     obj = SubjectModel(
         user=request.user, title=request.POST.get('title'), weekday=request.POST.get("weekday"),
-        timetable=request.POST.get('timetable'), sns_id=request.POST.get('sns_id'),
+        timetable=request.POST.get('timetable'), #sns_id=request.POST.get('sns_id'),
         remind_class=request.POST.get('remind_class'), remind_task=request.POST.get('remind_task'),
-        remind=request.POST.get('remind'))
+        # remind=request.POST.get('remind')
+        )
     obj.save()
     return redirect(to="home")
 
 def updatePOST(request):
     obj = SubjectModel.objects.get(pk=request.POST.get("pk"))
     obj.title = request.POST.get('title')
-    obj.remind = request.POST.get('remind')
-    obj.sns_id=request.POST.get('sns_id')
+    # obj.remind = request.POST.get('remind')
+    # obj.sns_id=request.POST.get('sns_id')
     obj.remind_class = request.POST.get('remind_class')
     obj.remind_task = request.POST.get('remind_task')
     obj.save()
@@ -138,7 +139,6 @@ def deletePOST(request):
     pk=request.POST.get('deletePk')
     obj = SubjectModel.objects.get(pk=pk)
     obj.delete()
-
     return redirect(to="home")
 
 class dataDelete(DeleteView):
