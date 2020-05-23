@@ -13,3 +13,4 @@
 #メモ
 $ python manage.py cron
 により手動であらかじめ設定しておいた先にラインの通知
+lineNotifyを利用
