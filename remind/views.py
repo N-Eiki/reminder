@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from .forms import RemindRadioForm,createForm
 from django.views.decorators.csrf import csrf_exempt
 import json
-# from .util.tool import LineMessage, message_create
+from .models import Profile
 from django.http import HttpResponse
 from webpush import send_user_notification
 
@@ -41,8 +41,19 @@ def loginfunc(request):
             return redirect('login')
     return render(request,"login.html")
 
+
+
+def regist_profile(req):
+    try:
+        profile=Profile.objects.get(user=req.user)
+        print(profile.user)
+    except:#ユーザがProfileに未登録ならここで登録
+        profile = Profile.objects.create(user=req.user, sns_id="")
+        print(profile.user)
+
 @login_required
 def homefunc(request):
+    regist_profile(request)
     weekdays = ["月", "火", "水", "木", "金"]
     all = SubjectModel.objects.all()
     #forのなかでa.user=ログインユーザー名の場合値を返すような感じ？
@@ -55,8 +66,8 @@ def homefunc(request):
             sub_list.append(all_data.timetable)
             alldata.append(sub_list)
     
-    payload = {"head":"welcom", "body":"hello world"}
-    send_user_notification(user=request.user, payload=payload, ttl=1000)
+    # payload = {"head":"welcom", "body":"hello world"}
+    # send_user_notification(user=request.user, payload=payload, ttl=1000)
     params = {
         "alldata":alldata,
         "weekdays":weekdays,
@@ -136,26 +147,27 @@ class dataDelete(DeleteView):
 
 
 
-
-# from datetime import datetime, timedelta
-
-# @csrf_exempt
-# def remindfunc(request):
-#     if request.method=="POST":
-#         req = json.loads(request.body.decode('utf-8'))
-#         events = req["events"]
-#         day="月"
-#         timetable="3"
-#         data= msg_class=SubjectModel.objects.get(user="admin", timetable=timetable,weekday=day)
-#         for event in events:
-#             msg = message_create()
-#             line_message = LineMessage(msg)
-#             line_message.reply()
-
-#         return HttpResponse('ok')
-
 def remindfunc(req):
     return render(req, "remind.html")
 
 
 
+
+
+def settingsfunc(req):
+    
+    remindmsg=""
+    try:
+        data = SubjectModel.objects.get(user=request.user, timetable=timetable,weekday=day)
+        obj = SubjectModel.objects.get(user=request.user, weekday=day, timetable=timetable)
+        remindmsg = "リマインド停止中です"
+        if obj.remind:
+            remindmsg = "リマインドします"
+    except:
+        data={"title":"予定なし", "pk":False}
+    user = req.user
+    params = {
+        "radioForm": RemindRadioForm,    
+        "remindmsg": remindmsg
+    }
+    return render(req,'settings.html',params)

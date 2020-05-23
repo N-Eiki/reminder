@@ -8,5 +8,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         users = User.objects.all()
         for u in users:
+            print('------------------')
             print(u)
             job(u)

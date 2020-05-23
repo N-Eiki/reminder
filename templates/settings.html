@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load common %}
+
+{% block customcss %}
+{% endblock customcss %}
+
+{% block title%} detail/{{day}}/{{timetable}} {% endblock title %}
+
+{% block header %}
+<div class="alert alert-success" role="alert">
+    <p><a href="{% url 'home' %}">ホームに戻る</a></p>
+</div>
+{% endblock header %}
+
+
+{% block content %}
+<h1>ここでは設定について行えます</h1>
+
+<form action="" method="POST">{% csrf_token %}
+    <p>現在の設定では{{remindmsg}}</p>
+    <p>{{radioForm}}</p>
+    <a href="https://notify-bot.line.me/ja/">ここ</a>からログインしてidを取得してください
+    <p>snsのid <input type="text" name="sns_id" value="{{data.sns_id}}"></p>
+
+</form>
+
+{% endblock content %}
