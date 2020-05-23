@@ -8,7 +8,7 @@ Choice = {
 }
 
 class RemindRadioForm(forms.Form):
-    remind=forms.ChoiceField(label="リマインドについて", widget=forms.RadioSelect, choices=Choice,initial=True)
+    remind=forms.ChoiceField(label="リマインドの設定を変更しますか？", widget=forms.RadioSelect, choices=Choice,initial=True)
 
 class createForm(forms.ModelForm):
     class Meta:

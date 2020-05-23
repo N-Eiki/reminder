@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load common %}
+
+{% block customcss %}
+{% endblock customcss %}
+
+{% block title%} 設定 {% endblock title %}
+
+{% block header %}
+<div class="alert alert-success" role="alert">
+    <p><a href="{% url 'home' %}">ホームに戻る</a></p>
+</div>
+{% endblock header %}
+
+
+{% block content %}
+<h1>ここでは設定について行えます</h1>
+
+<form action="" method="POST">{% csrf_token %}
+    <p>現在の設定では{{remindmsg}}</p>
+    <p>{{radioForm}}</p>
+    <a href="https://notify-bot.line.me/ja/">ここ</a>からログインしてidを取得してください
+    <p>lineのid <input type="text" name="sns_id" value="{{profile.sns_id}}"></p>
+    <button type="submit">更新する</button>
+</form>
+
+{% endblock content %}

@@ -1,0 +1,32 @@
+h1{
+    color: red;
+}
+
+.header{
+    height: 80px;
+}
+
+table{
+    width: 1000px;
+    height: 300px;
+}
+
+.username{
+    float: left;
+}
+
+.settingBlock {
+    width: 300px;
+    height: 100px;
+    float: right;
+}
+
+.settings {
+    width: 100px;
+    height: 20px;
+}
+
+.logout {
+    width: 100px;
+    height: 20px;
+}
