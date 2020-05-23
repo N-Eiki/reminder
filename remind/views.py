@@ -155,19 +155,27 @@ def remindfunc(req):
 
 
 def settingsfunc(req):
-    
+    if  req.method=="POST":
+        obj = Profile.objects.get(user=req.user)
+        obj.remind = req.POST.get('remind')
+        obj.sns_id=req.POST.get('sns_id')    
+        obj.save()
+        return redirect(to="home")
+
+    profile = Profile.objects.get(user=req.user)
     remindmsg=""
     try:
-        data = SubjectModel.objects.get(user=request.user, timetable=timetable,weekday=day)
-        obj = SubjectModel.objects.get(user=request.user, weekday=day, timetable=timetable)
+        obj = Profile.objects.get(user=req.user)
         remindmsg = "リマインド停止中です"
         if obj.remind:
             remindmsg = "リマインドします"
     except:
-        data={"title":"予定なし", "pk":False}
+        pass
     user = req.user
     params = {
         "radioForm": RemindRadioForm,    
-        "remindmsg": remindmsg
+        "remindmsg": remindmsg,
+        "profile":profile,
+        "test":"test"
     }
     return render(req,'settings.html',params)
