@@ -18,7 +18,7 @@
 <h1>ここでは設定について行えます</h1>
 
 <form action="" method="POST">{% csrf_token %}
-    <p>現在の設定では<h3>{{remindmsg}}</h3></p>
+    <p>現在の設定では{{remindmsg}}</p>
     <p>{{radioForm}}</p>
     <a href="https://notify-bot.line.me/ja/">ここ</a>からログインしてidを取得してください
     <p>snsのid <input type="text" name="sns_id" value="{{profile.sns_id}}"></p>
