@@ -139,6 +139,7 @@ def deletePOST(request):
     pk=request.POST.get('deletePk')
     obj = SubjectModel.objects.get(pk=pk)
     obj.delete()
+    
     return redirect(to="home")
 
 class dataDelete(DeleteView):
