@@ -10,16 +10,25 @@
 {% block title%}home{% endblock title %}
 
 {% block header %}
-<div class="alert alert-success" role="alert">
-    {{user.username}}
-    {{msg}}
+<div class="header alert alert-dark" role="alert">
+    <div class="username">{{user.username}}</div>
+    <div class="settingBlock">
+        <div class="settings">
+            <a href="{% url 'settings' %}">設定</a>
+        </div>
+        <div class="logout">
+            <a class="logout" href="{% url 'logout' %}">ログアウト</a>
+        </div>
+    </div>
+    
 </div>
 {% endblock header %}
 
 
 
 {% block content %}
-<div class="alert alert-danger" role="alert">
+<h1>あああ</h1>
+<div class="alert alert-info" role="alert">
     <table border="1">
         <tr>
             {%with ''|center:6 as range %}
@@ -46,7 +55,5 @@
     <table border="1">
         <a href="#">他の予定</a>
     </table>
-    <a href="{% url 'logout' %}">ログアウト</a>
-
 </div>
 {% endblock content %}
