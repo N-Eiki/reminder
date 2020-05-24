@@ -13,4 +13,4 @@
 #メモ
 $ python manage.py cron
 により手動でユーザーごとに設定しておいた先にlinenotifyで通知
-lineNotifyを利用
+今の所linenotifyで進める
