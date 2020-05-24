@@ -16,4 +16,4 @@ class SubjectModel(models.Model):
 class Profile(models.Model):
     remind = models.BooleanField(default=True)#通知をするか否か
     sns_id = models.CharField(max_length=100, blank=False)#通知を送るためのtoken
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.CharField(max_length=100)#投稿者名

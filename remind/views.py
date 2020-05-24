@@ -44,12 +44,14 @@ def loginfunc(request):
 
 
 def regist_profile(req):
+    print(req.user)
     try:
         profile=Profile.objects.get(user=req.user)
-        print(profile.user)
+        print("登録ずみ")
     except:#ユーザがProfileに未登録ならここで登録
         profile = Profile.objects.create(user=req.user, sns_id="")
-        print(profile.user)
+        print('登録しました')
+
 
 @login_required
 def homefunc(request):
@@ -155,6 +157,7 @@ def remindfunc(req):
 
 
 def settingsfunc(req):
+    # print(Profile.objects.get(user=req.user).user)
     if  req.method=="POST":
         obj = Profile.objects.get(user=req.user)
         obj.remind = req.POST.get('remind')
