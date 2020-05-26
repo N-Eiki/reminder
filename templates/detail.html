@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% load common %}
+{% load static %}
 
 {% block customcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'detail.css' %}">
 {% endblock customcss %}
 
 {% block title%} detail/{{day}}/{{timetable}} {% endblock title %}
@@ -15,27 +17,37 @@
 
 
 {% block content %}
-<h1>ここは詳細ページです</h1>
-<p>ここでは授業内容の更新などが行えます。</p>
+<h1>ここでは授業内容の更新などが行えます。</h1>
 <h1>{{day}}曜日, {{timetable}}時限目の講義は</h1>
 <h1>{{data.title}}です</h1>
 {% if data.pk %}
 <div>
     <form action="" method="POST">
         {% csrf_token %}
-        <p>講義名: <input type="text" name="title" value="{{data.title}}"></p>
-        <p>講義が近づいたらなんとリマインドしますか？ <input type="text" name="remind_class" value="{{data.remind_class}}"></p>
-        <p>講義の提出が近づいたらなんとリマインドしますか？ <input type="text" name="remind_task" value="{{data.remind_task}}"></p>
+        <table border="1">
+            <tr>
+                <th>講義名: </th>
+                <th><input type="text" name="title" value="{{data.title}}"></th>
+            </t>
+            <tr>
+                <th>講義が近づいたらなんとリマインドしますか？ </th>
+                <th><input type="text" name="remind_class" value="{{data.remind_class}}"></th>
+            </tr>
+            <tr>
+                <th>講義の提出が近づいたらなんとリマインドしますか？ </th>
+                <th><input type="text" name="remind_task" value="{{data.remind_task}}"></th>
+            </tr>
+        </table>
         <input type="hidden" name="weekday" value="{{day}}">
         <input type="hidden" name="timetable" value="{{timetable}}">
         <input type="hidden" name="pk" value="{{data.pk}}">
-        <input type="submit" name="updatePOST" value="更新">
+        <input type="submit" name="updatePOST" value="更新" class="updateButton postButton">
     </form>
 </div>
 <hr>
 <form action="" method="POST">{% csrf_token %}
     <input type="hidden" name="deletePk" value="{{data.pk}}">
-    <input type="submit"  name="deletePOST" value="この講義の登録を削除する">
+    <input type="submit"  name="deletePOST" value="この講義の登録を削除する" class="deleteButton postButton">
 </form>
 {% endif %}
 
@@ -44,12 +56,24 @@
 <div>
     <form action="" method="post">
         {% csrf_token %}
-        <p>講義名: <input type="text" name="title" value="" placeholder="未設定" required=True></p>
-        <p>講義が近づいたらなんとリマインドしますか？ <input type="text" name="remind_class" value="講義が近づいています"></p>
-        <p>講義の提出が近づいたらなんとリマインドしますか？ <input type="text" name="remind_task" value="課題提出日が近づいています"></p>
+        <table border="1">
+            <tr>
+                <th>講義名</th>
+                <th><input type="text" name="title" value="" placeholder="未設定" required=True></th>
+            </tr>
+            <tr>
+                <th>講義が近づいたらなんとリマインドしますか？</th>
+                <th> <input type="text" name="remind_class" value="講義が近づいています"></th>
+            </tr>
+            <tr>
+                <th>講義の提出が近づいたらなんとリマインドしますか？</th>
+                <th><input type="text" name="remind_task" value="課題提出日が近づいています"></th>
+            </tr>
+        </table>
+        
         <input type="hidden" name="weekday" value="{{day}}">
         <input type="hidden" name="timetable" value="{{timetable}}">
-        <tr><td></td><td><input type="submit" name="newPOST" value="登録"></td></tr>
+        <input type="submit" name="newPOST" value="登録" class="postButton newButton">
     </form>
 </div>
 {% endif %}

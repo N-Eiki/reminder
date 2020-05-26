@@ -67,12 +67,15 @@ def homefunc(request):
             sub_list.append(all_data.weekday)
             sub_list.append(all_data.timetable)
             alldata.append(sub_list)
-    
+    sns_id = Profile.objects.get(user=request.user).sns_id
+
+
     # payload = {"head":"welcom", "body":"hello world"}
     # send_user_notification(user=request.user, payload=payload, ttl=1000)
     params = {
         "alldata":alldata,
         "weekdays":weekdays,
+        "sns_id":sns_id
     }
 
     return render(request, "home.html", params)
