@@ -51,8 +51,12 @@
         {% endfor %}
     </table>
 
-    <table border="1">
-        <a href="#">他の予定</a>
-    </table>
+    
+    <a href="#">他の予定</a>
+    {% if sns_id == "" %}
+        <p>idが設定されていません。</p>
+        <a href="{% url 'settings' %}">ここ</a>でトークンを発行、設定してください。
+    {% endif %}
+
 </div>
 {% endblock content %}
