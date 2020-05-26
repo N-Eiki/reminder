@@ -1,0 +1,21 @@
+.InputToken {
+    padding: 10%;
+}
+
+table{
+    margin: 0% 10%;
+}
+
+.updateButton {
+    margin: 1% 10%;
+    padding: 1% 5% ;
+}
+
+.updateButton:hover{
+    background-color:palevioletred;
+}
+
+.remindState{
+    margin-left: 10%;
+    color: blue;
+}

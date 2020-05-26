@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% load common %}
+{% load static %}
 
 {% block customcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'settings.css' %}">
 {% endblock customcss %}
 
 {% block title%} 設定 {% endblock title %}
@@ -18,11 +20,26 @@
 <h1>ここでは設定について行えます</h1>
 
 <form action="" method="POST">{% csrf_token %}
-    <p>現在の設定では{{remindmsg}}</p>
-    <p>{{radioForm}}</p>
-    <a href="https://notify-bot.line.me/ja/">ここ</a>からログインして招待したいグループを選択し、アクセストークンを取得してください。
-    <p>アクセストークン <input type="text" name="sns_id" value="{{profile.sns_id}}"></p>
-    <button type="submit">更新する</button>
+    <p class="remindState">現在の設定では{{remindmsg}}</p>
+    <table border="1">
+        <tr>
+            <p>{{radioForm}}</p>
+            
+        </tr>
+        <tr>
+            <th>
+                アクセストークン
+                <p><a href="https://notify-bot.line.me/ja/" target="_blank">※ここ</a>からアクセストークンを発行してください。</p>
+                <th>
+                    <input class="InputToken" type="text" name="sns_id" value="{{profile.sns_id}}" >
+                </th>
+            </th>
+        </tr>
+    </table>
+    <button class="updateButton" type="submit">更新する</button>
 </form>
 
+
+<p>※リンク先からlineにログインしてマイページに飛んでください。</p>
+<p>その後トークンを発行する,から通知を出したいグループのアクセストークンを発行してください。</p>
 {% endblock content %}
