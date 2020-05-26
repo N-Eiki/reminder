@@ -1,0 +1,23 @@
+.postButton {
+    padding:10px 5%;
+    margin-top: 1%;
+    margin-left: 5%;
+}
+
+.postButton:hover{
+    background-color: palevioletred;
+    color: white;
+}
+
+table {
+    margin-left: 10%;
+}
+
+h1 {
+    margin-left: 5%;
+}
+
+.deleteButton{
+    float:right;
+    margin-right: 10%;
+}
