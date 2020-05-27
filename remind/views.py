@@ -12,20 +12,23 @@ from .models import Profile
 from django.http import HttpResponse
 from webpush import send_user_notification
 
-# Create your views here.
 def signupfunc(request):
     if request.method=="POST":
-        username=request.POST["username"]
-        email=request.POST["email"]
-        password=request.POST["password"]
-        try:
-            User.objects.get(username=username)
-            return render(request, "signup.html", {"error":"このユーザー名はすでに使用されています。"})
-        except:
-            user = User.objects.create_user(username, email, password)
-            return redirect("home")
+        return registUser(request)
     else:
         return render(request, "signup.html")
+
+
+def registUser(request):
+    username=request.POST["username"]
+    email=request.POST["email"]
+    password=request.POST["password"]
+    try:
+        User.objects.get(username=username)
+        return render(request, "signup.html", {"error":"このユーザー名はすでに使用されています。"})
+    except:
+        user = User.objects.create_user(username, email, password)
+        return redirect("home")
 
 
 def loginfunc(request):
@@ -58,18 +61,9 @@ def homefunc(request):
     regist_profile(request)
     weekdays = ["月", "火", "水", "木", "金"]
     all = SubjectModel.objects.all()
-    #forのなかでa.user=ログインユーザー名の場合値を返すような感じ？
-    alldata = []
-    for all_data in all:
-        if all_data.user==str(request.user):##ここにログインユーザー名を入れる
-            sub_list = []
-            sub_list.append(all_data.title)
-            sub_list.append(all_data.weekday)
-            sub_list.append(all_data.timetable)
-            alldata.append(sub_list)
+
+    alldata=makeHomeData(request,all)
     sns_id = Profile.objects.get(user=request.user).sns_id
-
-
     # payload = {"head":"welcom", "body":"hello world"}
     # send_user_notification(user=request.user, payload=payload, ttl=1000)
     params = {
@@ -80,51 +74,56 @@ def homefunc(request):
 
     return render(request, "home.html", params)
 
+def makeHomeData(request,all):
+    alldata = []
+    for all_data in all:
+        if all_data.user==str(request.user):##ここにログインユーザー名を入れる
+            sub_list = []
+            sub_list.append(all_data.title)
+            sub_list.append(all_data.weekday)
+            sub_list.append(all_data.timetable)
+            alldata.append(sub_list)
+    return alldata        
+
+
 def logoutfunc(request):
     logout(request)
     return redirect("login")
 
 @login_required
 def detailfunc(request, day,timetable):
-    # remindmsg=""
 
     try:
         data = SubjectModel.objects.get(user=request.user, timetable=timetable,weekday=day)
         obj = SubjectModel.objects.get(user=request.user, weekday=day, timetable=timetable)
-        # remindmsg = "リマインド停止中です"
-        # if obj.remind:
-        #     remindmsg = "リマインドします"
     except:
         data={"title":"予定なし", "pk":False}
     try:
-        #予定なしからのポスト
-        if "newPOST" in request.POST:
-            return newPOST(request)
-        elif "updatePOST" in request.POST:
-            return updatePOST(request)#ポストの更新
-        elif "deletePOST" in request.POST:
-            return deletePOST(request)#ポストの削除
-        else:
-            raise("error")
+        return postCase(request)
     except:
         params = {
             "data": data,
             "timetable": timetable,
             "day": day,
-            # "radioForm": RemindRadioForm,
             "createForm": createForm,
-            # "remindmsg": remindmsg
         }
         return render(request, "detail.html", params)
 
-
+def postCase(request):
+    if "newPOST" in request.POST:
+        return newPOST(request)
+    elif "updatePOST" in request.POST:
+        return updatePOST(request)#ポストの更新
+    elif "deletePOST" in request.POST:
+        return deletePOST(request)#ポストの削除
+    else:
+        raise("error")
 
 def newPOST(request):
     obj = SubjectModel(
         user=request.user, title=request.POST.get('title'), weekday=request.POST.get("weekday"),
-        timetable=request.POST.get('timetable'), #sns_id=request.POST.get('sns_id'),
+        timetable=request.POST.get('timetable'), 
         remind_class=request.POST.get('remind_class'), remind_task=request.POST.get('remind_task'),
-        # remind=request.POST.get('remind')
         )
     obj.save()
     return redirect(to="home")
@@ -150,17 +149,11 @@ class dataDelete(DeleteView):
     model = SubjectModel
     success_url = reverse_lazy("home")
 
-
-
 def remindfunc(req):
     return render(req, "remind.html")
 
 
-
-
-
 def settingsfunc(req):
-    # print(Profile.objects.get(user=req.user).user)
     if  req.method=="POST":
         obj = Profile.objects.get(user=req.user)
         obj.remind = req.POST.get('remind')
@@ -169,19 +162,17 @@ def settingsfunc(req):
         return redirect(to="home")
 
     profile = Profile.objects.get(user=req.user)
-    remindmsg=""
-    try:
-        obj = Profile.objects.get(user=req.user)
-        remindmsg = "リマインド停止中です"
-        if obj.remind:
-            remindmsg = "リマインドします"
-    except:
-        pass
-    user = req.user
+    remindmsg=remindSetting(req)
     params = {
         "radioForm": RemindRadioForm,    
         "remindmsg": remindmsg,
         "profile":profile,
-        "test":"test"
     }
     return render(req,'settings.html',params)
+
+def remindSetting(req):
+    obj = Profile.objects.get(user=req.user)
+    remindmsg = "リマインド停止中です"
+    if obj.remind:
+        remindmsg = "リマインドします"
+    return remindmsg
