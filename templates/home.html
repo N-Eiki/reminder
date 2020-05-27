@@ -4,6 +4,7 @@
 {% load static %}
 
 {% block customcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
 {% endblock customcss %}
 
@@ -27,7 +28,7 @@
 
 
 {% block content %}
-<div class="alert alert-info" role="alert">
+<div class="alert alert-info content" role="alert">
     <table border="1">
         <tr>
             {%with ''|center:6 as range %}

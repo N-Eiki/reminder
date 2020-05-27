@@ -27,3 +27,7 @@ table{
     width: 100px;
     height: 20px;
 }
+
+.content {
+    height: 100%;
+}
