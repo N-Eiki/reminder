@@ -15,17 +15,21 @@ from webpush import send_user_notification
 # Create your views here.
 def signupfunc(request):
     if request.method=="POST":
-        username=request.POST["username"]
-        email=request.POST["email"]
-        password=request.POST["password"]
-        try:
-            User.objects.get(username=username)
-            return render(request, "signup.html", {"error":"このユーザー名はすでに使用されています。"})
-        except:
-            user = User.objects.create_user(username, email, password)
-            return redirect("home")
+        return registUser(request)
     else:
         return render(request, "signup.html")
+
+
+def registUser(request):
+    username=request.POST["username"]
+    email=request.POST["email"]
+    password=request.POST["password"]
+    try:
+        User.objects.get(username=username)
+        return render(request, "signup.html", {"error":"このユーザー名はすでに使用されています。"})
+    except:
+        user = User.objects.create_user(username, email, password)
+        return redirect("home")
 
 
 def loginfunc(request):
@@ -58,18 +62,18 @@ def homefunc(request):
     regist_profile(request)
     weekdays = ["月", "火", "水", "木", "金"]
     all = SubjectModel.objects.all()
+
     #forのなかでa.user=ログインユーザー名の場合値を返すような感じ？
-    alldata = []
-    for all_data in all:
-        if all_data.user==str(request.user):##ここにログインユーザー名を入れる
-            sub_list = []
-            sub_list.append(all_data.title)
-            sub_list.append(all_data.weekday)
-            sub_list.append(all_data.timetable)
-            alldata.append(sub_list)
+    # alldata = []
+    # for all_data in all:
+    #     if all_data.user==str(request.user):##ここにログインユーザー名を入れる
+    #         sub_list = []
+    #         sub_list.append(all_data.title)
+    #         sub_list.append(all_data.weekday)
+    #         sub_list.append(all_data.timetable)
+    #         alldata.append(sub_list)
+    alldata=makeHomeData(request,all)
     sns_id = Profile.objects.get(user=request.user).sns_id
-
-
     # payload = {"head":"welcom", "body":"hello world"}
     # send_user_notification(user=request.user, payload=payload, ttl=1000)
     params = {
@@ -79,6 +83,18 @@ def homefunc(request):
     }
 
     return render(request, "home.html", params)
+
+def makeHomeData(request,all):
+    alldata = []
+    for all_data in all:
+        if all_data.user==str(request.user):##ここにログインユーザー名を入れる
+            sub_list = []
+            sub_list.append(all_data.title)
+            sub_list.append(all_data.weekday)
+            sub_list.append(all_data.timetable)
+            alldata.append(sub_list)
+    return alldata        
+
 
 def logoutfunc(request):
     logout(request)
