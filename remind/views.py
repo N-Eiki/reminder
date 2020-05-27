@@ -110,22 +110,12 @@ def detailfunc(request, day,timetable):
         data={"title":"予定なし", "pk":False}
     try:
         return postCase(request)
-        # if "newPOST" in request.POST:
-        #     return newPOST(request)
-        # elif "updatePOST" in request.POST:
-        #     return updatePOST(request)#ポストの更新
-        # elif "deletePOST" in request.POST:
-        #     return deletePOST(request)#ポストの削除
-        # else:
-        #     raise("error")
     except:
         params = {
             "data": data,
             "timetable": timetable,
             "day": day,
-            # "radioForm": RemindRadioForm,
             "createForm": createForm,
-            # "remindmsg": remindmsg
         }
         return render(request, "detail.html", params)
 
@@ -176,11 +166,7 @@ def remindfunc(req):
     return render(req, "remind.html")
 
 
-
-
-
 def settingsfunc(req):
-    # print(Profile.objects.get(user=req.user).user)
     if  req.method=="POST":
         obj = Profile.objects.get(user=req.user)
         obj.remind = req.POST.get('remind')
@@ -189,19 +175,17 @@ def settingsfunc(req):
         return redirect(to="home")
 
     profile = Profile.objects.get(user=req.user)
-    remindmsg=""
-    try:
-        obj = Profile.objects.get(user=req.user)
-        remindmsg = "リマインド停止中です"
-        if obj.remind:
-            remindmsg = "リマインドします"
-    except:
-        pass
-    user = req.user
+    remindmsg=remindSetting(req)
     params = {
         "radioForm": RemindRadioForm,    
         "remindmsg": remindmsg,
         "profile":profile,
-        "test":"test"
     }
     return render(req,'settings.html',params)
+
+def remindSetting(req):
+    obj = Profile.objects.get(user=req.user)
+    remindmsg = "リマインド停止中です"
+    if obj.remind:
+        remindmsg = "リマインドします"
+    return remindmsg
