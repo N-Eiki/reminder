@@ -4,10 +4,6 @@ from remind.models import SubjectModel,Profile
 import datetime
 import requests
 
-# line_notify_token="Au0ZoMVcud0qyHZzV8vJ3apJywFO5EqwiI6olYfWS9b"
-# line_notify_api = 'https://notify-api.line.me/api/notify'
-# headers = {'Authorization': 'Bearer ' + line_notify_token}  # 発行したトークン
-
 def job(username):
     # line_notify_token="Au0ZoMVcud0qyHZzV8vJ3apJywFO5EqwiI6olYfWS9b"
     line_notify_api = 'https://notify-api.line.me/api/notify'

@@ -12,7 +12,6 @@ from .models import Profile
 from django.http import HttpResponse
 from webpush import send_user_notification
 
-# Create your views here.
 def signupfunc(request):
     if request.method=="POST":
         return registUser(request)
@@ -63,15 +62,6 @@ def homefunc(request):
     weekdays = ["月", "火", "水", "木", "金"]
     all = SubjectModel.objects.all()
 
-    #forのなかでa.user=ログインユーザー名の場合値を返すような感じ？
-    # alldata = []
-    # for all_data in all:
-    #     if all_data.user==str(request.user):##ここにログインユーザー名を入れる
-    #         sub_list = []
-    #         sub_list.append(all_data.title)
-    #         sub_list.append(all_data.weekday)
-    #         sub_list.append(all_data.timetable)
-    #         alldata.append(sub_list)
     alldata=makeHomeData(request,all)
     sns_id = Profile.objects.get(user=request.user).sns_id
     # payload = {"head":"welcom", "body":"hello world"}
@@ -132,9 +122,8 @@ def postCase(request):
 def newPOST(request):
     obj = SubjectModel(
         user=request.user, title=request.POST.get('title'), weekday=request.POST.get("weekday"),
-        timetable=request.POST.get('timetable'), #sns_id=request.POST.get('sns_id'),
+        timetable=request.POST.get('timetable'), 
         remind_class=request.POST.get('remind_class'), remind_task=request.POST.get('remind_task'),
-        # remind=request.POST.get('remind')
         )
     obj.save()
     return redirect(to="home")
@@ -159,8 +148,6 @@ def deletePOST(request):
 class dataDelete(DeleteView):
     model = SubjectModel
     success_url = reverse_lazy("home")
-
-
 
 def remindfunc(req):
     return render(req, "remind.html")
