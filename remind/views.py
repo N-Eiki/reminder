@@ -102,26 +102,22 @@ def logoutfunc(request):
 
 @login_required
 def detailfunc(request, day,timetable):
-    # remindmsg=""
 
     try:
         data = SubjectModel.objects.get(user=request.user, timetable=timetable,weekday=day)
         obj = SubjectModel.objects.get(user=request.user, weekday=day, timetable=timetable)
-        # remindmsg = "リマインド停止中です"
-        # if obj.remind:
-        #     remindmsg = "リマインドします"
     except:
         data={"title":"予定なし", "pk":False}
     try:
-        #予定なしからのポスト
-        if "newPOST" in request.POST:
-            return newPOST(request)
-        elif "updatePOST" in request.POST:
-            return updatePOST(request)#ポストの更新
-        elif "deletePOST" in request.POST:
-            return deletePOST(request)#ポストの削除
-        else:
-            raise("error")
+        return postCase(request)
+        # if "newPOST" in request.POST:
+        #     return newPOST(request)
+        # elif "updatePOST" in request.POST:
+        #     return updatePOST(request)#ポストの更新
+        # elif "deletePOST" in request.POST:
+        #     return deletePOST(request)#ポストの削除
+        # else:
+        #     raise("error")
     except:
         params = {
             "data": data,
@@ -133,7 +129,15 @@ def detailfunc(request, day,timetable):
         }
         return render(request, "detail.html", params)
 
-
+def postCase(request):
+    if "newPOST" in request.POST:
+        return newPOST(request)
+    elif "updatePOST" in request.POST:
+        return updatePOST(request)#ポストの更新
+    elif "deletePOST" in request.POST:
+        return deletePOST(request)#ポストの削除
+    else:
+        raise("error")
 
 def newPOST(request):
     obj = SubjectModel(
