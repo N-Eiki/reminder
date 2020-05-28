@@ -33,18 +33,18 @@
         <tr>
             {%with ''|center:6 as range %}
             {%for i in range%}
-            <th>{{forloop.counter0}}</th>
+            <th class="timetableFactor">{{forloop.counter0}}</th>
             {% endfor %}
             {% endwith %}
         </tr>
 
         {% for day in weekdays %}
         <tr>
-            <th>{{day}}</th>
+            <th class="timetableFactor">{{day}}</th>
             {% with ''|center:5 as range %}
             {% for _ in range%}
             {% with forloop.counter as classes %}
-                    <th><a class="classes_box" href="{% url "detail" day classes %}"}>{{ day|make_list:classes|display:alldata }}</a></th>
+                    <th class="timetableFactor"><a class="classes_box" href="{% url "detail" day classes %}"}>{{ day|make_list:classes|display:alldata }}</a></th>
             {% endwith %}
             {% endfor %}
             {% endwith %}

@@ -3,8 +3,8 @@
 }
 
 table{
-    width: 1000px;
-    height: 300px;
+    width: 100%;
+    height: 500px;
 }
 
 .username{
@@ -30,4 +30,8 @@ table{
 
 .content {
     height: 100%;
+}
+
+.timetableFactor{
+    text-align: center;
 }
